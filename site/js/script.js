@@ -3,6 +3,7 @@
  */
 "use strict";
 
+
 var userAgent = navigator.userAgent.toLowerCase(),
 	initialDate = new Date(),
 
