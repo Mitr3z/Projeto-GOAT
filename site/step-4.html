@@ -72,7 +72,7 @@
                   <div class="box-contacts-block">
                     <h3>Horário:</h3>
                     <p id="time-display"></p>
-                  </div>                  
+                  </div>
                 </div>
                 <div class="box-contacts-col box-contacts-right">
                   <div class="box-contacts-block">
@@ -202,36 +202,42 @@
     const selectedService = localStorage.getItem('selectedService');
     const selectedBarber = localStorage.getItem('selectedBarber');
     const selectedDate = localStorage.getItem('selectedDate');
-    const selectedTime = localStorage.getItem('selectedTime'); // Recupera o horário selecionado
-  
-    // Exibe os valores na página de confirmação
+    const selectedTime = localStorage.getItem('selectedTime');
+
+    // Formata a data
+    function formatDate(dateString) {
+    const [year, month, day] = dateString.split('-');
+    return `${day}-${month}-${year}`;
+}
+
+    // Exibe os valores na página
     if (selectedService && selectedBarber && selectedDate && selectedTime) {
       document.getElementById('service-display').innerText = selectedService;
       document.getElementById('barber-display').innerText = selectedBarber;
-      document.getElementById('date-display').innerText = selectedDate;
-      document.getElementById('time-display').innerText = selectedTime; // Exibe o horário selecionado
+      const formattedDate = formatDate(selectedDate);
+      document.getElementById('date-display').innerText = formattedDate;
+      document.getElementById('time-display').innerText = selectedTime;
     }
-  
+
     // Função para enviar dados para o backend via POST
     function enviarDadosParaBackend(event) {
       event.preventDefault(); // Impede o envio do formulário pelo navegador
-  
+
       // Captura os dados do formulário e do localStorage
       const nome = document.getElementById('contact-full-name').value;
       const telefone = document.getElementById('telefone').value;
-  
+
       // Cria um objeto com todos os dados
       const dadosAgendamento = {
         service: selectedService,
         barber: selectedBarber,
         date: selectedDate,
-        time: selectedTime,
         name: nome,
         phone: telefone
       };
-  
+
       // Envia os dados via POST para o backend
-      fetch('http://seu-backend.com/api/endpoint', {
+      fetch('http://127.0.0.1:5500', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -251,10 +257,9 @@
         console.error('Erro na requisição:', error);
       });
     }
-  
+
     // Adiciona o listener ao formulário para capturar o evento de submissão
     document.getElementById('appointment-form').addEventListener('submit', enviarDadosParaBackend);
-  </script>  
-  
+  </script>
 </body>
 </html>
