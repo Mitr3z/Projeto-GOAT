@@ -180,31 +180,48 @@
                     </div>
                   </div>
                 </div>
-                <!-- Seção de Data e horário com Input -->
-                <!-- Seção de Data e Horário com Input -->
+                <!-- Seção de Data com Input -->
                 <div class="section-xs bg-periglacial-blue one-screen-page-content text-center">
-                  <h2>ESCOLHA UMA DATA E HORÁRIO</h2>
+                  <h2>ESCOLHA UMA DATA E HORA</h2>
                   <div class="range range-50">
                     <div class="cell-xs-12">
-                      <input class="dia" type="date" id="dataSelecione" style="padding: 10px; font-size: 16px; border-radius: 5px;">
+                      <div class="form-group">
+                        <label for="date">Data:</label>
+                        <input class="dia" type="date" id="dataSelecione" name="dia" class="form-control" style="padding: 10px; font-size: 16px; border-radius: 5px;">
+                      </div>
                     </div>
                     <div class="cell-xs-12">
-                      <select class="hora" id="horaSelecione" style="padding: 10px; font-size: 16px; border-radius: 5px;">
-                        <option value="">Selecione um horário</option>
-                        <option value="08:00">08:00</option>
-                        <option value="09:00">09:00</option>
-                        <option value="10:00">10:00</option>
-                        <option value="11:00">11:00</option>
-                        <option value="12:00">12:00</option>
-                        <option value="13:00">13:00</option>
-                        <option value="14:00">14:00</option>
-                        <option value="15:00">15:00</option>
-                        <option value="16:00">16:00</option>
-                      </select>
+                      <div class="form-group">
+                        <label for="hora">Hora:</label>
+                        <select class="hora" id="horaSelecione" name="hora" class="form-control" style="padding: 10px; font-size: 16px; border-radius: 5px;">
+                          <option value="">Selecione uma hora</option>
+                          <option value="08:00">08:00</option>
+                          <option value="09:00">09:00</option>
+                          <option value="10:00">10:00</option>
+                          <option value="11:00">11:00</option>
+                          <option value="12:00">12:00</option>
+                          <option value="13:00">13:00</option>
+                          <option value="14:00">14:00</option>
+                          <option value="15:00">15:00</option>
+                          <option value="16:00">16:00</option>
+                        </select>
+                      </div>
                     </div>
                   </div>
                 </div>
 
+                <script>
+                  document.addEventListener('DOMContentLoaded', function() {
+                      // Obtém o elemento de input para a data
+                      const dateInput = document.getElementById('dataSelecione');
+                      // Obtém o elemento de input para a hora
+                      const timeInput = document.getElementById('horaSelecione');
+              
+                      // Configura a data mínima como o dia atual
+                      dateInput.min = new Date().toISOString().split('T')[0];
+                  });
+              </script>
+              
                 <!-- Botão de confirmação -->
                 <div class="confirmation-button">
                   <a href="step-4.html" class="btn btn-primary btn-lg" id="confirm-button">Confirmar minhas escolhas</a>
@@ -229,57 +246,54 @@
                     box-sizing: border-box;
                   }
 
-                .hora {
-                    padding: 10px;
-                    font-size: 16px;
-                    border: 2px solid #004f4e;
-                    border-radius: 5px;
-                    width: 100%;
-                    max-width: 300px;
-                    box-sizing: border-box;
-                  }
+                  .hora {
+                  padding: 10px;
+                  font-size: 16px;
+                  border: 2px solid #004f4e;
+                  border-radius: 5px;
+                  width: 100%;
+                  max-width: 300px;
+                  box-sizing: border-box;
+                }
                 </style>
                 
+                <!-- JavaScript combinado -->
                 <script>
-                  // Função para verificar se a data e o horário estão dentro do intervalo permitido (8h às 17h)
-                  function isDateTimeInAllowedRange(date, time) {
-                    const selectedDateTime = new Date(date + 'T' + time);
-                    const startHour = 8;
-                    const endHour = 17;
-                    const selectedHour = selectedDateTime.getHours();
+                  // JavaScript do primeiro código
                 
-                    return selectedHour >= startHour && selectedHour < endHour;
-                  }
+                  // Adaptando o JavaScript do segundo código
+                  document.querySelectorAll('.barber-shop-label,.service-label').forEach(option => {
+                    option.addEventListener('click', () => {
+                      // Remove a seleção anterior da mesma categoria
+                      const input = option.querySelector('.hidden-input');
+                      const category = input.name;
+                      document.querySelectorAll(`.hidden-input[name=${category}]`).forEach(opt => {
+                        opt.checked = false;
+                        opt.nextElementSibling.style.border = "2px solid transparent";
+                        opt.nextElementSibling.style.backgroundColor = "transparent";
+                      });
                 
-                  // Armazena os dados selecionados no localStorage ao clicar no botão de confirmação
-                  document.getElementById('confirm-button').addEventListener('click', function(e) {
+                      // Define a opção clicada como selecionada
+                      input.checked = true;
+                      option.style.border = "2px solid #004f4e";
+                      option.style.backgroundColor = "#e0f6f6";
+                    });
+                  });
+                
+                  // JavaScript do botão de confirmação do segundo código
+                  document.getElementById('confirm-button').addEventListener('click', function (e) {
                     // Verifica se todas as seleções foram feitas
                     const barberSelected = document.querySelector('.hidden-input[name="barber-shop"]:checked');
                     const serviceSelected = document.querySelector('.hidden-input[name="service"]:checked');
                     const dateSelected = document.getElementById('dataSelecione').value;
                     const timeSelected = document.getElementById('horaSelecione').value;
                 
-                    if (!barberSelected || !serviceSelected || !dateSelected || !timeSelected) {
+                    if (!barberSelected ||!serviceSelected ||!dateSelected ||!timeSelected) {
                       e.preventDefault(); // Previne a navegação
                       alert('Por favor, selecione uma barbearia, um serviço, uma data e um horário antes de confirmar.');
-                      return;
                     }
-                
-                    // Verifica se a data e o horário selecionados estão dentro do intervalo permitido
-                    if (!isDateTimeInAllowedRange(dateSelected, timeSelected)) {
-                      e.preventDefault(); // Previne a navegação
-                      alert('Por favor, selecione uma data e um horário entre 8h e 17h.');
-                      return;
-                    }
-                
-                    // Armazena os dados selecionados no localStorage
-                    localStorage.setItem('selectedBarber', barberSelected.value);
-                    localStorage.setItem('selectedService', serviceSelected.value);
-                    localStorage.setItem('selectedDate', dateSelected);
-                    localStorage.setItem('selectedTime', timeSelected);
                   });
                 </script>
-                
   
               
 
@@ -384,5 +398,32 @@
     </div>
     <script src="js/core.min.js"></script>
     <script src="js/script.js"></script>
+    <script>
+      document.getElementById('confirm-button').addEventListener('click', function() {
+        // Obtém a barbearia selecionada
+        const selectedBarber = document.querySelector('input[name="barber-shop"]:checked');
+        if (selectedBarber) {
+          localStorage.setItem('selectedBarber', selectedBarber.value);
+        }
+  
+        // Obtém o serviço selecionado
+        const selectedService = document.querySelector('input[name="service"]:checked');
+        if (selectedService) {
+          localStorage.setItem('selectedService', selectedService.value);
+        }
+  
+        // Obtém a data selecionada
+        const selectedDate = document.getElementById('dataSelecione').value;
+        if (selectedDate) {
+          localStorage.setItem('selectedDate', selectedDate);
+        }
+
+        // Obtém o horário selecionado
+        const selectedTime = document.getElementById('horaSelecione').value;
+        if (selectedDate) {
+          localStorage.setItem('selectedTime', selectedTime);
+        }
+      });
+    </script>
   </body>
 </html>
