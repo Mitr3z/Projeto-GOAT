@@ -53,7 +53,7 @@
             <div class="shell">
               <h2>Última coisa!</h2>
               <div class="p text-width-medium">
-                <p class="big">Para completar o agendamento, não se esqueça de confirmar seu nome e telefone para que possamos entrar em contato</p>
+                <p class="big">Para completar o agendamento, não se esqueça de confirmar seu nome e email para que possamos entrar em contato</p>
               </div>
               <div class="box-contacts box-contacts-vertical box-contacts-vertical-small box-wrap-content-interactive block-centered">
                 <div class="box-contacts-col">
@@ -82,8 +82,8 @@
                         <input class="form-control" id="contact-full-name" type="text" name="name" data-constraints="@Required">
                       </div>
                       <div class="form-group">
-                        <label class="form-label-outside" for="telefone">Telefone</label>
-                        <input class="form-control" id="telefone" type="text" name="telefone" oninput="formatarTelefone(this)" data-constraints="@Required">
+                        <label class="form-label-outside" for="email">Email</label>
+                        <input class="form-control" id="email" type="email" name="email" data-constraints="@Required @Email">
                       </div>
                       <button class="btn btn-sm btn-primary btn-block btn-circle" type="submit">Confirmar</button>
                     </form>
@@ -206,9 +206,9 @@
 
     // Formata a data
     function formatDate(dateString) {
-    const [year, month, day] = dateString.split('-');
-    return `${day}-${month}-${year}`;
-}
+      const [year, month, day] = dateString.split('-');
+      return `${day}-${month}-${year}`;
+    }
 
     // Exibe os valores na página
     if (selectedService && selectedBarber && selectedDate && selectedTime) {
@@ -225,19 +225,24 @@
 
       // Captura os dados do formulário e do localStorage
       const nome = document.getElementById('contact-full-name').value;
-      const telefone = document.getElementById('telefone').value;
+      const email = document.getElementById('email').value;
+      const servicoSelecionado = selectedService;
+      const barbeariaSelecionada = selectedBarber;
+      const dataSelecionada = selectedDate;
+      const horarioSelecionado = selectedTime;
 
       // Cria um objeto com todos os dados
       const dadosAgendamento = {
-        service: selectedService,
-        barber: selectedBarber,
-        date: selectedDate,
         name: nome,
-        phone: telefone
+        email: email,
+        service: servicoSelecionado,
+        barber: barbeariaSelecionada,
+        date: dataSelecionada,
+        time: horarioSelecionado
       };
 
       // Envia os dados via POST para o backend
-      fetch('http://127.0.0.1:5500', {
+      fetch('http://localhost:8080/agendamento_api', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
