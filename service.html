@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html class="wide wow-animation" lang="en">
+<head>
+<title>Agendamento</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<link rel="icon" href="images/tesoura.png" type="image/x-icon">
+<link rel="stylesheet" href="css/style.css">
+<style>
+    /* Estilo básico para a lista */
+    .list-group {
+    list-style: none; /* Remove os marcadores padrão */
+    padding: 0;
+    margin: 0;
+    max-width: 600px;
+    margin: auto;
+    }
+
+    .list-group-item {
+        display: flex;
+        align-items: center;
+        padding: 15px;
+        margin-bottom: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+        transition: background-color 0.3s;
+    }
+
+    .list-group-item:hover {
+        background-color: #e9e9e9;
+    }
+
+    .list-group-item label {
+        flex: 1;
+        margin-left: 10px;
+    }
+
+    .list-group-item input[type="radio"] {
+        margin-right: 10px;
+    }
+
+    /* Estilo para os inputs de data e hora */
+    #dataSelecione, #horaSelecione, #nome, #telefone {
+        margin-left: 10px;
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+        margin-top: 10px;
+    }
+
+    /* Estilo para o botão de confirmação */
+    .confirmation-button {
+        text-align: center;
+    }
+
+    
+
+    /* Estilos para a barra de navegação */
+    .navbar {
+        background-color: #014d55;
+        padding: 10px 0;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+    }
+
+    .navbar .brand {
+        margin-left: 20px;
+    }
+
+    .navbar .nav {
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        margin: 0;
+        padding: 0;
+    }
+
+    .navbar .nav li {
+        margin: 0 15px;
+    }
+
+    .navbar .nav li a {
+        color: #fff;
+        text-decoration: none;
+        font-size: 18px;
+    }
+
+    .content {
+      padding-top: 60px; /* Adiciona espaço para a barra de navegação fixa */
+    }
+</style>
+</head>
+<body class="one-screen-page">
+    <!-- Barra de Navegação -->
+    <div class="navbar">
+        <div class="brand">
+        <a href="index.html"><img src="images/logo-default-dark-200x36.png" alt="Logo" width="200" height="36"/></a>
+    </div>
+    <ul class="nav">
+        <li><a href="index.html">Ínicio</a></li>
+        <li><a href="about.html">Sobre</a></li>
+        <li><a href="service.html">Serviços</a></li>
+        <li><a href="privacy-policy.html">Política de privacidade</a></li>
+    </ul>
+    </div><br><br>
+<div class="content">
+    <div class="page">
+    <main class="page-content" id="perspective">
+        <section class="section-xs bg-periglacial-blue one-screen-page-content text-center">
+            <div class="shell">
+            <h2>Escolha a Barbearia</h2><br>
+            <ul class="list-group">
+            <li class="list-group-item">
+                <input type="radio" id="barbearia1" name="barber-shop" value="Barbearia Central">
+                <label for="barbearia1">Barbearia Central</label>
+            </li>
+            <li class="list-group-item">
+                <input type="radio" id="barbearia2" name="barber-shop" value="Barbearia Esquina">
+                <label for="barbearia2">Barbearia Esquina</label>
+            </li>
+            <li class="list-group-item">
+                <input type="radio" id="barbearia3" name="barber-shop" value="Barbearia Avenida">
+                <label for="barbearia3">Barbearia Avenida</label>
+            </li>
+            </ul><br><br>
+
+            <h2>Escolha o Serviço</h2><br>
+            <ul class="list-group">
+            <li class="list-group-item">
+                <input type="radio" id="service1" name="service" value="Corte de Cabelo">
+                <label for="service1">Corte de Cabelo</label>
+            </li>
+            <li class="list-group-item">
+                <input type="radio" id="service2" name="service" value="Barba">
+                <label for="service2">Barba</label>
+            </li>
+            <li class="list-group-item">
+                <input type="radio" id="service3" name="service" value="Corte e Barba">
+                <label for="service3">Corte e Barba</label>
+            </li>
+            </ul><br><br>
+
+            <h2>Escolha uma Data e Hora</h2><br>
+            <ul class="list-group">
+            <li class="list-group-item">
+                <label for="dataSelecione">Data:</label>
+                <input type="date" id="dataSelecione" name="dia">
+            </li><br><br>
+            <li class="list-group-item">
+                <label for="horaSelecione">Hora:</label><br>
+                <select id="horaSelecione" name="hora">
+                    <option value="">Selecione uma hora</option>
+                    <option value="08:00">08:00</option>
+                    <option value="09:00">09:00</option>
+                    <option value="10:00">10:00</option>
+                    <option value="11:00">11:00</option>
+                    <option value="12:00">12:00</option>
+                    <option value="13:00">13:00</option>
+                    <option value="14:00">14:00</option>
+                    <option value="15:00">15:00</option>
+                    <option value="16:00">16:00</option>
+                </select>
+                </li>
+            </ul><br><br>
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    // Obtém o elemento de input para a data
+                    const dateInput = document.getElementById('dataSelecione');
+                    // Obtém o elemento de input para a hora
+                    const timeInput = document.getElementById('horaSelecione');
+            
+                    // Configura a data mínima como o dia atual
+                    dateInput.min = new Date().toISOString().split('T')[0];
+                });
+            </script>
+
+            <style>
+                /* Estilos existentes do primeiro código */
+                
+                /* Adicionando estilos do segundo código */
+            .dia {
+                padding: 10px;
+                font-size: 16px;
+                border: 2px solid #004f4e;
+                border-radius: 5px;
+                width: 100%;
+                max-width: 300px;
+                box-sizing: border-box;
+                margin-top: 10px;
+                }
+
+            .hora {
+                padding: 10px;
+                font-size: 16px;
+                border: 2px solid #004f4e;
+                border-radius: 5px;
+                width: 100%;
+                max-width: 300px;
+                box-sizing: border-box;
+                }
+            </style>
+
+            <h2>Informações Pessoais</h2>
+            <ul class="list-group">
+                <li class="list-group-item">
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" name="name">
+                </li>
+                <li class="list-group-item">
+                <label for="telefone">Telefone:</label>
+                <input type="text" id="telefone" name="telefone" oninput="formatarTelefone(this)">
+                </li>
+            </ul><br>
+            <script>
+            function formatarTelefone(telefone) {
+                var valor = telefone.value;
+                valor = valor.replace(/\D/g, ""); // Remove caracteres não numéricos
+                valor = valor.replace(/(\d{2})(\d)/, "($1) $2"); // Adiciona parênteses e espaço após os dois primeiros dígitos
+                valor = valor.replace(/(\d{5})(\d)/, "$1-$2"); // Adiciona traço após o quinto dígito
+                telefone.value = valor;
+            }
+            </script>
+
+            <div class="confirmation-button" style="margin-top: 20px;">
+                <button class="btn btn-primary btn-lg" id="confirm-button">Confirmar minhas escolhas</button>
+            </div>
+            </div>
+        </section>
+        </main>
+    </div>
+    <br><br>
+<!-- Page Footer-->
+            <footer class="page-footer page-footer-default">
+            <div class="shell">
+                <div class="range range-xs-center">
+                <div class="cell-lg-10">
+                    <a class="brand" href="index.html">
+                    <img src="images/logo-default-dark-200x36.png" alt="" width="200" height="36"/>
+                    </a>
+                    <div class="text-highlighted-wrap">
+                    <p class="text-highlighted">Barbershop is a No.1 place to have a men’s haircut in San Francisco. Here you can get luxury barber experience at a reasonable price.</p>
+                    </div>
+                    <ul class="footer-navigation footer-navigation-horizontal">
+                    <li><a href="index.html">Ínicio</a></li>
+                    <li class="active"><a href="about.html">Sobre</a></li>
+                    <li><a href="service.html">Serviços</a></li>
+                    <li><a href="privacy-policy.html">Política de privacidade</a></li>
+                    </ul>
+                <div class="divider divider-small divider-light block-centered"></div>
+                <ul class="inline-list inline-list-md">
+                    <li><a class="icon icon-xs link-gray-light fa-instagram" href="#"></a></li>
+                    <li><a class="icon icon-xs link-gray-light fa-pinterest" href="#"></a></li>
+                    <li><a class="icon icon-xs link-gray-light fa-youtube" href="#"></a></li>
+                    <li><a class="icon icon-xs link-gray-light fa-linkedin" href="#"></a></li>
+                </ul>
+                </div>
+            </div>
+            </div>
+        </footer>
+        </div>
+        <div id="perspective-content-overlay"></div>
+    </div>
+<script src="js/core.min.js"></script>
+<script src="js/script.js"></script>
+
+<script>
+    document.getElementById('confirm-button').addEventListener('click', function() {
+      // Obtém as seleções do usuário
+    const selectedBarber = document.querySelector('input[name="barber-shop"]:checked')?.value;
+    const selectedService = document.querySelector('input[name="service"]:checked')?.value;
+    const selectedDate = document.getElementById('dataSelecione').value;
+    const selectedTime = document.getElementById('horaSelecione').value;
+    const selectedName = document.getElementById('nome').value;
+    const selectedPhone = document.getElementById('telefone').value;
+
+      // Verifica se todos os campos estão preenchidos
+    if (!selectedBarber || !selectedService || !selectedDate || !selectedTime || !selectedName || !selectedPhone) {
+        alert('Por favor, preencha todos os campos antes de confirmar.');
+        return;
+    }
+
+      // Cria um objeto com os dados
+    const appointmentData = {
+        barber: selectedBarber,
+        service: selectedService,
+        date: selectedDate,
+        time: selectedTime,
+        name: selectedName,
+        telefone: selectedPhone
+    };
+
+      // Envia os dados para a API
+    fetch('http://localhost:8080/agendamento', {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(appointmentData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Sucesso:', data);
+        alert('Agendamento confirmado com sucesso!');
+        window.location.href = 'finish.html';
+    })
+    .catch(error => {
+        console.error('Erro:', error);
+        alert('Ocorreu um erro ao confirmar o agendamento.');
+    });
+    });
+</script>
+</body>
+</html>
